@@ -12,7 +12,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata = {
-  title: "Colgeio Alicante",
+  title: "Colegio Alicante",
   description: "Aplicacion para manejar la informacion de Colegios",
 };
 
