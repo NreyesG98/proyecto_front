@@ -1,7 +1,7 @@
 export async function fetchData() {
   const token = localStorage.getItem('token'); // O sessionStorage.getItem('token');
   
-  const response = await fetch('http://localhost:4000/api/data', {
+  const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/data`, {
     method: 'GET',
     headers: {
       'Authorization': `Bearer ${token}`,

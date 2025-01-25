@@ -17,7 +17,7 @@ export async function createPago() {
 
 
 export async function getUsers() {
-    const response = await fetch('http://localhost:4000/api/users', {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/users`, {
         cache: 'no-store',
     });
     if (!response.ok) {
@@ -27,7 +27,7 @@ export async function getUsers() {
 }
 
 export async function createApoderado(apoderado) {
-    const response = await fetch('http://localhost:4000/api/apoderados', {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/apoderados`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',

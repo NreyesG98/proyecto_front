@@ -85,7 +85,7 @@ const CrudApoderados = ({ action }) => {
         const fetchData = async () => {
             try {
                 const token = localStorage.getItem('token'); // Obtén el token de localStorage
-                const response = await fetch('http://localhost:4000/api/users', {
+                const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/users`, {
                     headers: {
                         'Authorization': `Bearer ${token}`, // Incluye el token en los encabezados
                         'Content-Type': 'application/json',
@@ -166,7 +166,7 @@ const CrudApoderados = ({ action }) => {
                 setData(data.map((item) => (item.id_apoderado === editItem.id_apoderado ? result : item)).sort((a, b) => b.id_apoderado - a.id_apoderado));
                 setEditItem(null);
             } else {
-                const response = await fetch('http://localhost:4000/api/create-users', {
+                const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/create-users`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -416,7 +416,7 @@ const CrudPagos = ({ action }) => {
 
     useEffect(() => {
         const fetchData = async () => {
-            const response = await fetch('http://localhost:4000/api/pagos');
+            const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/pagos`);
             const result = await response.json();
             setData(result.sort((a, b) => b.id_pago - a.id_pago)); // Ordenar por id_pago descendente
         };
@@ -482,7 +482,7 @@ const CrudPagos = ({ action }) => {
                 setData(data.map((item) => (item.id_pago === editItem.id_pago ? result : item)).sort((a, b) => b.id_pago - a.id_pago));
                 setEditItem(null);
             } else {
-                const response = await fetch('http://localhost:4000/api/pagos', {
+                const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/pagos`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -651,7 +651,7 @@ const CrudSeguimiento = () => {
     const [data, setData] = useState([]);
     useEffect(() => {
         const fetchData = async () => {
-            const response = await fetch('http://localhost:4000/api/users');
+            const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/users`);
             const result = await response.json();
             setData(result);
         };
@@ -696,7 +696,7 @@ const CrudAsistencia = () => {
 
     useEffect(() => {
         const fetchData = async () => {
-            const response = await fetch('http://localhost:4000/api/reuniones');
+            const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/reuniones`);
             const result = await response.json();
             setData(result);
         };
@@ -742,7 +742,7 @@ const CrudComunicaciones = () => {
 
     useEffect(() => {
         const fetchData = async () => {
-            const response = await fetch('http://localhost:4000/api/comunicaciones');
+            const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/comunicaciones`);
             const result = await response.json();
             setData(result);
         };
@@ -785,7 +785,7 @@ const CrudEncuestas = () => {
 
     useEffect(() => {
         const fetchData = async () => {
-            const response = await fetch('http://localhost:4000/api/encuestas');
+            const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/encuestas`);
             const result = await response.json();
             setData(result);
         };

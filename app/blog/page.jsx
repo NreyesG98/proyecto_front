@@ -112,7 +112,7 @@ const CrudApoderados = ({ action }) => {
         const fetchData = async () => {
             try {
                 const token = localStorage.getItem('token'); // Obtén el token de localStorage
-                const response = await fetch('http://localhost:4000/api/users', {
+                const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/users`, {
                     headers: {
                         'Authorization': `Bearer ${token}`, // Incluye el token en los encabezados
                         'Content-Type': 'application/json',
@@ -194,7 +194,7 @@ const CrudApoderados = ({ action }) => {
                 setData(data.map((item) => (item.id_apoderado === editItem.id_apoderado ? result : item)))
                 setEditItem(null);
             } else {
-                const response = await fetch('http://localhost:4000/api/create-users', {
+                const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/create-users`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -551,7 +551,7 @@ const CrudPagos = ({ action }) => {
 
     useEffect(() => {
         const fetchData = async () => {
-            const response = await fetch('http://localhost:4000/api/pagos');
+            const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/pagos`);
             const result = await response.json();
             setData(result.sort((a, b) => b.id_pago - a.id_pago)); // Ordenar por id_pago descendente
         };
@@ -619,7 +619,7 @@ const CrudPagos = ({ action }) => {
                 setData(data.map((item) => (item.id_pago === editItem.id_pago ? result : item)).sort((a, b) => b.id_pago - a.id_pago));
                 setEditItem(null);
             } else {
-                const response = await fetch('http://localhost:4000/api/pagos', {
+                const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/pagos`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -835,7 +835,7 @@ const CrudSeguimiento = () => {
     const [data, setData] = useState([]);
     useEffect(() => {
         const fetchData = async () => {
-            const response = await fetch('http://localhost:4000/api/users');
+            const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/users`);
             const result = await response.json();
             setData(result);
         };
@@ -890,7 +890,7 @@ const CrudAsistencia = ({ action }) => {
 
     useEffect(() => {
         const fetchData = async () => {
-            const response = await fetch('http://localhost:4000/api/reuniones');
+            const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/reuniones`);
             const result = await response.json();
             setData(result);
         };
@@ -917,7 +917,7 @@ const CrudAsistencia = ({ action }) => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         const method = editItem ? 'PUT' : 'POST';
-        const url = editItem ? `http://localhost:4000/api/reuniones/${editItem.id_reunion}` : 'http://localhost:4000/api/reuniones';
+        const url = editItem ? `http://localhost:4000/api/reuniones/${editItem.id_reunion}` : `${process.env.NEXT_PUBLIC_API_URL}/reuniones`;
         const response = await fetch(url, {
             method,
             headers: {

@@ -10,7 +10,7 @@ document.getElementById('registerForm').addEventListener('submit', async (e) => 
     const direccion_apo = document.getElementById('direccion_apo').value;
     const tipo_apo = document.getElementById('tipo_apo').value;
   
-    const response = await fetch('http://localhost:4000/api/register', {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/register`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -37,7 +37,7 @@ document.getElementById('registerForm').addEventListener('submit', async (e) => 
     const correo_apo = document.getElementById('login_correo_apo').value;
     const contrasena_apo = document.getElementById('login_contrasena_apo').value;
   
-    const response = await fetch('http://localhost:4000/api/login', {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/login`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -61,7 +61,7 @@ document.getElementById('registerForm').addEventListener('submit', async (e) => 
   
   document.getElementById('getReuniones').addEventListener('click', async () => {
     const token = localStorage.getItem('token');
-    const response = await fetch('http://localhost:4000/api/reuniones', {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/reuniones`, {
       method: 'GET',
       headers: {
         'Authorization': `Bearer ${token}`,
