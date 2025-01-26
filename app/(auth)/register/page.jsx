@@ -67,6 +67,7 @@ function App() {
 
     try {
       console.log("aqui esta la url :",process.env.NEXT_PUBLIC_API_URL);
+      console.log(process.env)
 
       const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/register`, {
         method: 'POST',
