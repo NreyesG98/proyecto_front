@@ -46,7 +46,8 @@ const LoginPage = () => {
       const result = await response.json();
       localStorage.setItem('token', result.token);
       localStorage.setItem('tipo_apo', result.tipo);
-      console.log("aqui esta el tipo", result.tipo);
+      console.log("tipo usuario: ", result.tipo);
+      console.log("data user: ", result);
 
       setProgress(100);
       setTimeout(() => {
