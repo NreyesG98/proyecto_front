@@ -2,6 +2,12 @@
 import React, { useState, useEffect } from 'react';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import styles from './blog.module.css'; // Importar el archivo CSS como módulo
+import "@/styles/admin.css";
+import { Avatar, AvatarFallback } from '@radix-ui/react-avatar';
+import Image from 'next/image';
+import Gallery from '@/components/Gallery';
+import Communications from '@/components/Communications';
+import { AvatarImage } from '@/components/ui/avatar';
 
 
 const Dashboard = () => {
@@ -9,14 +15,27 @@ const Dashboard = () => {
     const [showSubMenu, setShowSubMenu] = useState(false);
     const [showApoderadosSubMenu, setShowApoderadosSubMenu] = useState(false);
     const [userType, setUserType] = useState(null);
+    const [userName, setUserName] = useState('');
+    const [userLastName, setUserLastName] = useState('');
+    const [correo, setCorreo] = useState('');
+    const [avatarIcon, setAvatarIcon] = useState('');
 
     useEffect(() => {
         const tipoApo = localStorage.getItem('tipo_apo');
+        const nombreApo = localStorage.getItem('nombre_apo');
+        const apellidoApo = localStorage.getItem('apellido_apo');
         if (!tipoApo) {
             alert('No se encontró el tipo de usuario. Por favor, inicie sesión.');
             window.location.href = '/login';
         } else {
             setUserType(tipoApo);
+            setUserName(nombreApo);
+            setUserLastName(apellidoApo);
+
+            // Generar un número aleatorio y seleccionar el icono
+            const icons = ['/images/profile01.png', '/images/profile02.png', '/images/profile03.png'];
+            const randomIndex = Math.floor(Math.random() * icons.length);
+            setAvatarIcon(icons[randomIndex]);
         }
     }, []);
 
@@ -32,49 +51,114 @@ const Dashboard = () => {
         setShowApoderadosSubMenu(!showApoderadosSubMenu);
     };
 
+    const getInitials = (name, lastName) => {
+        const nameInitial = name ? name.charAt(0).toUpperCase() : '';
+        const lastNameInitial = lastName ? lastName.charAt(0).toUpperCase() : '';
+        return `${nameInitial}${lastNameInitial}`;
+    };
+
+    const capitalizeFirstLetter = (string) => {
+        if (!string) return '';
+        return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
+    };
+
     if (!userType) {
         return <div>Cargando...</div>; // Muestra un mensaje de carga mientras se obtiene el tipo de usuario
     }
 
 
     return (
-        <div className={styles.dashboard}>
-            <div className={styles.sidebar}>
-                <h2>Mi Curso</h2>
-                {userType === 'admin' && (
-                    <>
-                        <div className={styles.menuItem} onClick={handleApoderadosSubMenuClick}>Apoderados</div>
-                        {showApoderadosSubMenu && (
-                            <div className={styles.subMenu}>
-                                <div className={styles.subMenuItem} onClick={() => handleMenuItemClick('verApoderados')}>Ver Apoderados</div>
-                                <div className={styles.subMenuItem} onClick={() => handleMenuItemClick('agregarApoderado')}>Agregar Apoderado</div>
-                                <div className={styles.subMenuItem} onClick={() => handleMenuItemClick('editarApoderado')}>Actualizar Apoderado</div>
-                                <div className={styles.subMenuItem} onClick={() => handleMenuItemClick('eliminarApoderado')}>Eliminar Apoderado</div>
+        <main className="flex min-h-screen w-full flex-row">
+        {/* // <div className={styles.dashboard}> */}
+            <div className="admin-sidebar">
+                {/* <div className={styles.sidebar}> */}
+                <div>
+                    <div className="logo">
+                        <Image
+                            src="/icons/admin/logo.svg"
+                            alt="Logo"
+                            width={33}
+                            height={33}
+                        />
+                        <h1>Colegio Alicante</h1>
+                    </div>
+                    
 
-                            </div>
-                        )}
-                    </>
-                )}
-                <div className={styles.menuItem} onClick={() => handleMenuItemClick('asistencia')}>Reuniones</div>
-                <div className={styles.menuItem} onClick={handleSubMenuClick}>Pagos</div>
-                {showSubMenu && (
-                    <div className={styles.subMenu}>
-                        <div className={styles.subMenuItem} onClick={() => handleMenuItemClick('verPagos')}>Ver Pagos</div>
+                    {/* User Menu */}
+                    <div className="user">
+                        <Avatar className="h-8 w-8 rounded-lg">
+                            <AvatarImage src={avatarIcon} alt="User Avatar" />
+                            <AvatarFallback className="bg-amber-100">
+                                {/* {getInitials(session?.user?.name || "IN")} */}
+                                {getInitials(userName, userLastName) || "IN"}
+                            </AvatarFallback>
+                        </Avatar>
+
+                        <div className="flex flex-col max-md:hidden">
+                            <p className="font-semibold text-dark-200">
+                                {capitalizeFirstLetter(userName)} {capitalizeFirstLetter(userLastName)}
+                            </p>
+                            <p className="text-xs text-light-500">
+                                {/* {session?.user?.email} */}
+                                {userType === 'admin' ? 'Administrador' : 'Apoderado'}
+                            </p>
+                        </div>
+                    </div> 
+
+                    <div className="mt-10 flex flex-col gap-5">
                         {userType === 'admin' && (
                             <>
-                                <div className={styles.subMenuItem} onClick={() => handleMenuItemClick('agregarPago')}>Agregar Pago</div>
-                                <div className={styles.subMenuItem} onClick={() => handleMenuItemClick('editarPago')}>Actualizar Pago</div>
-                                <div className={styles.subMenuItem} onClick={() => handleMenuItemClick('eliminarPago')}>Eliminar Pago</div>
+                                <div className={styles.menuItem} onClick={handleApoderadosSubMenuClick}>Apoderados</div>
+                                {showApoderadosSubMenu && (
+                                    <div className={styles.subMenu}>
+                                        <div className={styles.subMenuItem} onClick={() => handleMenuItemClick('verApoderados')}>Ver Apoderados</div>
+                                        <div className={styles.subMenuItem} onClick={() => handleMenuItemClick('agregarApoderado')}>Agregar Apoderado</div>
+                                        <div className={styles.subMenuItem} onClick={() => handleMenuItemClick('editarApoderado')}>Actualizar Apoderado</div>
+                                        <div className={styles.subMenuItem} onClick={() => handleMenuItemClick('eliminarApoderado')}>Eliminar Apoderado</div>
+
+                                    </div>
+                                )}
                             </>
                         )}
+                        <div className={styles.menuItem} onClick={() => handleMenuItemClick('asistencia')}>Reuniones</div>
+                        <div className={styles.menuItem} onClick={handleSubMenuClick}>Pagos</div>
+                        {showSubMenu && (
+                            <div className={styles.subMenu}>
+                                <div className={styles.subMenuItem} onClick={() => handleMenuItemClick('verPagos')}>Ver Pagos</div>
+                                {userType === 'admin' && (
+                                    <>
+                                        <div className={styles.subMenuItem} onClick={() => handleMenuItemClick('agregarPago')}>Agregar Pago</div>
+                                        <div className={styles.subMenuItem} onClick={() => handleMenuItemClick('editarPago')}>Actualizar Pago</div>
+                                        <div className={styles.subMenuItem} onClick={() => handleMenuItemClick('eliminarPago')}>Eliminar Pago</div>
+                                    </>
+                                )}
+                            </div>
+                        )}
+                        <div className={styles.menuItem} onClick={() => handleMenuItemClick('comunicaciones')}>Mis Comunicaciones</div>
+                        {/* <div className={styles.menuItem} onClick={() => handleMenuItemClick('encuestas')}>Mis encuestas</div> */}
+                        <div className={styles.menuItem} onClick={() => handleMenuItemClick('galerias')}>Galerías</div>
+
                     </div>
-                )}
-                <div className={styles.menuItem} onClick={() => handleMenuItemClick('comunicaciones')}>Mis Comunicaciones</div>
-                <div className={styles.menuItem} onClick={() => handleMenuItemClick('encuestas')}>Mis encuestas</div>
-                <div className={styles.menuItem} onClick={() => handleMenuItemClick('galerias')}>Galerías</div>
+                </div>
+
             </div>
-            <div className={styles.mainContent}>
-                <h2>Contenido Principal</h2>
+
+
+            <div className='admin-container'>
+            {/* <div className={styles.mainContent}> */}
+                <header className="admin-header">
+                    <div>
+                        <h2 className="text-2xl font-semibold text-dark-400">
+                        {/* {session?.user?.name} */}
+                        </h2>
+                        <p className="text-base text-slate-500">
+                        Administra todos tus usuarios, reuniones y pagos aquí
+                        </p>
+                    </div>
+                </header>
+
+
+                {/* <h2>Contenido Principal</h2> */}
                 {activeCrud === 'verApoderados' && <CrudApoderados action="ver" />}
                 {activeCrud === 'agregarApoderado' && <CrudApoderados action="agregar" />}
                 {activeCrud === 'editarApoderado' && <CrudApoderados action="editar" />}
@@ -85,10 +169,11 @@ const Dashboard = () => {
                 {activeCrud === 'editarPago' && <CrudPagos action="editar" />}
                 {activeCrud === 'eliminarPago' && <CrudPagos action="eliminar" />}
                 {activeCrud === 'comunicaciones' && <CrudComunicaciones />}
-                {activeCrud === 'encuestas' && <CrudEncuestas />}
+                {/* {activeCrud === 'encuestas' && <CrudEncuestas action="ver" />} */}
                 {activeCrud === 'galerias' && <CrudGalerias />}
             </div>
-        </div>
+            
+        </main>
     );
 };
 
@@ -1029,36 +1114,41 @@ const CrudAsistencia = ({ action }) => {
 
 
 const CrudComunicaciones = () => {
-    const boletines = [
-        {
-            titulo: "Boletín Informativo 1",
-            contenido: "Este es el contenido del boletín informativo 1. Aquí puedes poner cualquier información relevante."
-        },
-        {
-            titulo: "Boletín Informativo 2",
-            contenido: "Este es el contenido del boletín informativo 2. Aquí puedes poner cualquier información relevante."
-        },
-        {
-            titulo: "Boletín Informativo 3",
-            contenido: "Este es el contenido del boletín informativo 3. Aquí puedes poner cualquier información relevante."
-        }
-    ];
+
     return (
-        <div className={styles.crudContainer}>
-            <h3>Comunicaciones</h3>
-            <div className={styles.boletines}>
-                {boletines.map((boletin, index) => (
-                    <div key={index} className={styles.boletin}>
-                        <h4>{boletin.titulo}</h4>
-                        <p>{boletin.contenido}</p>
-                    </div>
-                ))}
-            </div>
-        </div>
+        <Communications />
     );
+
+    // const boletines = [
+    //     {
+    //         titulo: "Boletín Informativo 1",
+    //         contenido: "Este es el contenido del boletín informativo 1. Aquí puedes poner cualquier información relevante."
+    //     },
+    //     {
+    //         titulo: "Boletín Informativo 2",
+    //         contenido: "Este es el contenido del boletín informativo 2. Aquí puedes poner cualquier información relevante."
+    //     },
+    //     {
+    //         titulo: "Boletín Informativo 3",
+    //         contenido: "Este es el contenido del boletín informativo 3. Aquí puedes poner cualquier información relevante."
+    //     }
+    // ];
+    // return (
+    //     <div className={styles.crudContainer}>
+    //         <h3>Comunicaciones</h3>
+    //         <div className={styles.boletines}>
+    //             {boletines.map((boletin, index) => (
+    //                 <div key={index} className={styles.boletin}>
+    //                     <h4>{boletin.titulo}</h4>
+    //                     <p>{boletin.contenido}</p>
+    //                 </div>
+    //             ))}
+    //         </div>
+    //     </div>
+    // );
 };
 
-const CrudEncuestas = () => {
+const CrudEncuestas = ({ action }) => {
     return (
         <div className={styles.crudContainer}>
             <h3>CRUD de Encuestas</h3>
@@ -1090,31 +1180,10 @@ const CrudEncuestas = () => {
 };
 
 const CrudGalerias = () => {
-    const images = [
-        {
-            url: 'images/colegio1.jpg',
-            alt: 'Imagen 1'
-        },
-        {
-            url: 'images/colegio2.jpg',
-            alt: 'Imagen 2'
-        },
-        {
-            url: 'images/colegio3.jpg',
-            alt: 'Imagen 3'
-        }
-    ];
 
     return (
-        <div className={styles.crudContainer}>
-            <h3>Galerías</h3>
-            <div className={styles.gallery}>
-                {images.map((image, index) => (
-                    <div key={index} className={styles.galleryItem}>
-                        <img src={image.url} alt={image.alt} />
-                    </div>
-                ))}
-            </div>
+        <div>
+            <Gallery />
         </div>
     );
 };

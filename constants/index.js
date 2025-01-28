@@ -14,29 +14,39 @@ export const navigationLinks = [
 
 export const adminSideBarLinks = [
   {
-    img: "/icons/admin/home.svg",
+    img: "/icons/admin/house.svg",
     route: "/admin",
     text: "Home",
   },
   {
     img: "/icons/admin/users.svg",
-    route: "/admin/users",
-    text: "All Users",
+    route: "/admin/apoderados",
+    text: "Apoderados",
   },
   {
-    img: "/icons/admin/book.svg",
-    route: "/admin/books",
-    text: "All Books",
+    img: "/icons/admin/calendar-days.svg",
+    route: "/admin/reuniones",
+    text: "Reuniones",
   },
   {
-    img: "/icons/admin/bookmark.svg",
-    route: "/admin/book-requests",
-    text: "Borrow Requests",
+    img: "/icons/admin/hand-coins.svg",
+    route: "/admin/pagos",
+    text: "Pagos",
   },
   {
-    img: "/icons/admin/user.svg",
-    route: "/admin/account-requests",
-    text: "Account Requests",
+    img: "/icons/admin/messages-square.svg",
+    route: "/admin/comunicaciones",
+    text: "Comunicaciones",
+  },
+  {
+    img: "/icons/admin/notebook-pen.svg",
+    route: "/admin/encuestas",
+    text: "Mis Encuestas",
+  },
+  {
+    img: "/icons/admin/images.svg",
+    route: "/admin/galeria",
+    text: "Galerias",
   },
 ];
 
