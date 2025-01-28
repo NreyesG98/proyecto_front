@@ -114,8 +114,9 @@ const CrudApoderados = ({ action }) => {
                 const token = localStorage.getItem('token'); // Obtén el token de localStorage
                 const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/users`, {
                     headers: {
-                        'Authorization': `Bearer ${token}`, // Incluye el token en los encabezados
                         'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`, // Incluye el token en los encabezados
+                        'no-cache': 'no-cache', // Agrega una cabecera no-cache para evitar la caché del navegador
                     },
                 });
                 if (!response.ok) {
@@ -162,7 +163,8 @@ const CrudApoderados = ({ action }) => {
             const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/users/${id}`, {
                 method: 'DELETE',
                 headers: {
-                    'Authorization': `Bearer ${token}`, // Incluye el token en los encabezados
+                    'Authorization': `Bearer ${token}`,// Incluye el token en los encabezados
+                    'content-type': 'application/json', // Establece el tipo de contenido a JSON
                 },
             });
             if (!response.ok) {

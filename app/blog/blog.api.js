@@ -31,7 +31,7 @@ export async function getUsers() {
 }
 
 export async function createApoderado(apoderado) {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/apoderados`, {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/users`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -45,7 +45,7 @@ export async function createApoderado(apoderado) {
 }
 
 export async function updateApoderado(id, apoderado) {
-    const response = await fetch(`http://localhost:4000/api/apoderados/${id}`, {
+    const response = await fetch(`http://localhost:4000/api/users/${id}`, {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json',
@@ -59,7 +59,7 @@ export async function updateApoderado(id, apoderado) {
 }
 
 export async function deleteApoderado(id) {
-    const response = await fetch(`http://localhost:4000/api/apoderados/${id}`, {
+    const response = await fetch(`http://localhost:4000/api/users/${id}`, {
         method: 'DELETE',
     });
     if (!response.ok) {
