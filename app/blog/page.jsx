@@ -128,7 +128,7 @@ const CrudApoderados = ({ action }) => {
                     console.error('Error: La respuesta de la API no es un array');
                 }
             } catch (error) {
-                console.error('Error al obtener los apoderados:', error);
+                console.error('Error al obtener los apoderados : 1', error);
             }
         };
 
@@ -159,7 +159,7 @@ const CrudApoderados = ({ action }) => {
     const handleDelete = async (id) => {
         try {
             const token = localStorage.getItem('token'); // Obtén el token de localStorage
-            const response = await fetch(`http://localhost:4000/api/users/${id}`, {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/users/${id}`, {
                 method: 'DELETE',
                 headers: {
                     'Authorization': `Bearer ${token}`, // Incluye el token en los encabezados
@@ -179,7 +179,7 @@ const CrudApoderados = ({ action }) => {
         try {
             const token = localStorage.getItem('token'); // Obtén el token de localStorage
             if (editItem) {
-                const response = await fetch(`http://localhost:4000/api/users/${editItem.id_apoderado}`, {
+                const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/users/${editItem.id_apoderado}`, {
                     method: 'PUT',
                     headers: {
                         'Content-Type': 'application/json',

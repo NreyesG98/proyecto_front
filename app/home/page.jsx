@@ -151,7 +151,7 @@ const CrudApoderados = ({ action }) => {
         try {
             const token = localStorage.getItem('token'); // Obtén el token de localStorage
             if (editItem) {
-                const response = await fetch(`http://localhost:4000/api/apoderados/${editItem.id_apoderado}`, {
+                const response = await fetch(`http://localhost:4000/api/users/${editItem.id_apoderado}`, {
                     method: 'PUT',
                     headers: {
                         'Content-Type': 'application/json',

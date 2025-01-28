@@ -18,7 +18,11 @@ export async function createPago() {
 
 export async function getUsers() {
     const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/users`, {
-        cache: 'no-store',
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'authorization': `Bearer ${localStorage.getItem('token')}`,
+        },
     });
     if (!response.ok) {
         throw new Error('Error al obtener los apoderados');
