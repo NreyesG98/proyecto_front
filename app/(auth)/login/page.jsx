@@ -7,6 +7,8 @@ import { Input } from "@/components/ui/input"
 import { Label } from '@/components/ui/label';
 import { Progress } from "@/components/ui/progress";
 
+import { ToastContainer, toast } from 'react-toastify';
+
 const LoginPage = () => {
   const [progress, setProgress] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
@@ -14,6 +16,8 @@ const LoginPage = () => {
   const [correoApo, setCorreoApo] = useState('');
   const [contrasenaApo, setContrasenaApo] = useState('');
   const router = useRouter();
+
+  const notify = () => toast("Inicio de sesion exitoso ✅");
 
   useEffect(() => {
     const timer = setTimeout(() => setProgress(66), 500)
@@ -57,7 +61,7 @@ const LoginPage = () => {
       setTimeout(() => {
         setIsLoading(false);
         router.push('/blog'); // Redirige al usuario después de iniciar sesión
-      }, 500);
+      }, 2000);
 
     } catch (error) {
       console.error('Error al iniciar sesión:', error);
@@ -101,9 +105,23 @@ const LoginPage = () => {
 
         {isLoading && <Progress value={progress} className="w-full" />}
 
-        <Button type="submit" className="form-btn" disabled={isLoading}>
+        <Button onClick={notify} type="submit" className="form-btn" disabled={isLoading}>
           {isLoading ? 'Cargando...' : 'Login'}
         </Button>
+
+        <ToastContainer
+          position="top-left"
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick={false}
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="light"
+          // transition={Bounce}
+        />
 
         <p className="text-center text-base font-medium">
           Nuevo en Colegio Alicante? {" "}

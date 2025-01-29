@@ -145,6 +145,8 @@ function useToast() {
     };
   }, [state])
 
+  console.log('useToast hook called!!!!!!!!!!!!!!!'); 
+
   return {
     ...state,
     toast,
