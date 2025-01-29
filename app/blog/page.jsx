@@ -591,7 +591,7 @@ const CrudApoderados = ({ action }) => {
                     <table className={styles.table}>
                         <thead>
                             <tr>
-                                <th>ID</th>
+                                <th>RUT</th>
                                 <th>Nombre</th>
                                 <th>Apellido</th>
                                 <th>Teléfono</th>
@@ -744,7 +744,7 @@ const CrudPagos = ({ action }) => {
                 <table className={styles.table}>
                     <thead>
                         <tr>
-                            <th>ID</th>
+                            <th>N°</th>
                             <th>Fecha</th>
                             <th>Monto</th>
                             <th>Estado Pago</th>
@@ -893,7 +893,7 @@ const CrudPagos = ({ action }) => {
                     <table className={styles.table}>
                         <thead>
                             <tr>
-                                <th>ID</th>
+                                <th>N°</th>
                                 <th>Fecha</th>
                                 <th>Monto</th>
                                 <th>Estado Pago</th>
