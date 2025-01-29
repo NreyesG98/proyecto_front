@@ -685,7 +685,7 @@ const CrudPagos = ({ action }) => {
     };
 
     const handleDelete = async (id) => {
-        await fetch(`http://localhost:4000/api/pagos/${id}`, {
+        await fetch(`${process.env.NEXT_PUBLIC_API_URL}/pagos/${id}`, {
             method: 'DELETE',
         });
         setData(data.filter((item) => item.id_pago !== id));
@@ -698,7 +698,7 @@ const CrudPagos = ({ action }) => {
         const formattedFormData = { ...formData, fecha_pago: formattedDate };
         try {
             if (editItem) {
-                const response = await fetch(`http://localhost:4000/api/pagos/${editItem.id_pago}`, {
+                const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/pagos/${editItem.id_pago}`, {
                     method: 'PUT',
                     headers: {
                         'Content-Type': 'application/json',
@@ -1008,7 +1008,7 @@ const CrudAsistencia = ({ action }) => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         const method = editItem ? 'PUT' : 'POST';
-        const url = editItem ? `http://localhost:4000/api/reuniones/${editItem.id_reunion}` : `${process.env.NEXT_PUBLIC_API_URL}/reuniones`;
+        const url = editItem ? `${process.env.NEXT_PUBLIC_API_URL}/reuniones/${editItem.id_reunion}` : `${process.env.NEXT_PUBLIC_API_URL}/reuniones`;
         const response = await fetch(url, {
             method,
             headers: {
@@ -1033,7 +1033,7 @@ const CrudAsistencia = ({ action }) => {
     };
 
     const handleDelete = async (id) => {
-        await fetch(`http://localhost:4000/api/reuniones/${id}`, {
+        await fetch(`${process.env.NEXT_PUBLIC_API_URL}/reuniones/${id}`, {
             method: 'DELETE'
         });
         setData(data.filter((item) => item.id_reunion !== id));
