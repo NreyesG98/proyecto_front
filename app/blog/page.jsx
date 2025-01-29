@@ -106,20 +106,23 @@ const Dashboard = () => {
                     </div> 
 
                     <div className="mt-10 flex flex-col gap-5">
-                        {userType === 'admin' && (
+                    {(userType === 'admin' || userType === 'apoderado') && (
                             <>
                                 <div className={styles.menuItem} onClick={handleApoderadosSubMenuClick}>Apoderados</div>
                                 {showApoderadosSubMenu && (
-                                    <div className={styles.subMenu}>
-                                        <div className={styles.subMenuItem} onClick={() => handleMenuItemClick('verApoderados')}>Ver Apoderados</div>
+                                <div className={styles.subMenu}>
+                                    <div className={styles.subMenuItem} onClick={() => handleMenuItemClick('verApoderados')}>Ver Apoderados</div>
+                                    {userType === 'admin' && (
+                                    <>
                                         <div className={styles.subMenuItem} onClick={() => handleMenuItemClick('agregarApoderado')}>Agregar Apoderado</div>
                                         <div className={styles.subMenuItem} onClick={() => handleMenuItemClick('editarApoderado')}>Actualizar Apoderado</div>
                                         <div className={styles.subMenuItem} onClick={() => handleMenuItemClick('eliminarApoderado')}>Eliminar Apoderado</div>
-
-                                    </div>
+                                    </>
+                                    )}
+                                </div>
                                 )}
                             </>
-                        )}
+                            )}
                         <div className={styles.menuItem} onClick={() => handleMenuItemClick('asistencia')}>Reuniones</div>
                         <div className={styles.menuItem} onClick={handleSubMenuClick}>Pagos</div>
                         {showSubMenu && (
@@ -325,7 +328,7 @@ const CrudApoderados = ({ action }) => {
                 <table className={styles.table}>
                     <thead>
                         <tr>
-                            <th>ID</th>
+                            <th>RUT</th>
                             <th>Nombre</th>
                             <th>Apellido</th>
                             <th>Teléfono</th>
@@ -753,7 +756,8 @@ const CrudPagos = ({ action }) => {
                             <tr key={item.id_pago}>
                                 <td>{item.id_pago}</td>
                                 <td>{formatDate(item.fecha_pago)}</td>
-                                <td>{item.monto}</td>
+                                <td>{item.monto.toLocaleString('es-CL', { style: 'currency', currency: 'CLP' })}</td>
+
                                 <td>{item.estado_pago}</td>
                                 <td>{formatRut(item.id_apoderado)}</td>
                             </tr>
@@ -811,7 +815,7 @@ const CrudPagos = ({ action }) => {
                  <table className={styles.table}>
                      <thead>
                          <tr>
-                             <th>ID Pago</th>
+                             <th>N°</th>
                              <th>Fecha Pago</th>
                              <th>Monto Pago</th>
                              <th>Estado Pago</th>
@@ -1041,7 +1045,7 @@ const CrudAsistencia = ({ action }) => {
             <table className={styles.table}>
                 <thead>
                     <tr>
-                        <th>ID Reunión</th>
+                        <th> N° Reunión</th>
                         <th>Fecha Reunión</th>
                         <th>Hora</th>
                         <th>Lugar Reunión</th>
@@ -1059,6 +1063,8 @@ const CrudAsistencia = ({ action }) => {
                             <td>{item.tema_reu}</td>
                             <td>
                                 <button onClick={() => handleEdit(item)}>Editar</button>
+                                <div></div>
+                                <div></div>
                                 <button onClick={() => handleDelete(item.id_reunion)}>Eliminar</button>
                             </td>
                         </tr>
