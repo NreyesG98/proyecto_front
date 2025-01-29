@@ -1,117 +1,73 @@
 "use client";
-import React, { useState } from 'react';
-import { useRouter } from 'next/navigation';
-import styles from './register.module.css';
-
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input"
+import React, { useState } from "react";
 import Link from "next/link";
-// import { useRouter } from 'next/navigation';
-import { Label } from '@/components/ui/label';
-import { useToast } from "@/hooks/use-toast";
-import { ToastAction  } from "@/components/ui/toast";
+import { useRouter } from "next/navigation";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+
+import { ToastContainer, toast, Bounce } from "react-toastify";
 
 function App() {
-  const [id_apoderado, setIdApoderado] = useState('');
-  const [nombreApo, setNombreApo] = useState('');
-  const [apellidoApo, setApellidoApo] = useState('');
-  const [telefonoApo, setTelefonoApo] = useState('');
-  const [correoApo, setCorreoApo] = useState('');
-  const [contrasenaApo, setContrasenaApo] = useState('');
-  const [direccionApo, setDireccionApo] = useState('');
-  const [tipoApo, setTipoApo] = useState('');
-  const [token, setToken] = useState('');
+  const [id_apoderado, setIdApoderado] = useState("");
+  const [nombreApo, setNombreApo] = useState("");
+  const [apellidoApo, setApellidoApo] = useState("");
+  const [telefonoApo, setTelefonoApo] = useState("");
+  const [correoApo, setCorreoApo] = useState("");
+  const [contrasenaApo, setContrasenaApo] = useState("");
+  const [direccionApo, setDireccionApo] = useState("");
+  const [tipoApo, setTipoApo] = useState("");
+  const [token, setToken] = useState("");
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
-  const { toast } = useToast();
 
-  // const handleRegister = async (e) => {
-  //   e.preventDefault();
-
-  //   const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/register`, {
-  //     method: 'POST',
-  //     headers: {
-  //       'Content-Type': 'application/json',
-  //     },
-  //     body: JSON.stringify({
-  //       id_apoderado: id_apoderado,
-  //       nombre_apo: nombreApo,
-  //       apellido_apo: apellidoApo,
-  //       telefono_apo: telefonoApo,
-  //       correo_apo: correoApo,
-  //       contrasena_apo: contrasenaApo,
-  //       direccion_apo: direccionApo,
-  //       tipo_apo: tipoApo,
-  //     }),
-  //   });
-
-  //   const data = await response.json();
-  //   console.log(data);
-  //   alert(data.message);
-
-  //   // Reiniciar los campos del formulario
-  //   setIdApoderado('');
-  //   setNombreApo('');
-  //   setApellidoApo('');
-  //   setTelefonoApo('');
-  //   setCorreoApo('');
-  //   setContrasenaApo('');
-  //   setDireccionApo('');
-  //   setTipoApo('');
-  // };
-
-  
   const handleRegister = async (e) => {
     e.preventDefault();
     setIsLoading(true);
 
     try {
-      console.log("aqui esta la url :",process.env.NEXT_PUBLIC_API_URL);
-      console.log(process.env)
+      console.log("aqui esta la url :", process.env.NEXT_PUBLIC_API_URL);
+      console.log(process.env);
 
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/register`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          id_apoderado: id_apoderado,
-          nombre_apo: nombreApo,
-          apellido_apo: apellidoApo,
-          telefono_apo: telefonoApo,
-          correo_apo: correoApo,
-          contrasena_apo: contrasenaApo,
-          direccion_apo: direccionApo,
-          tipo_apo: tipoApo,
-        }),
-      });
-
-      if (!response.ok) {
-        throw new Error('Error en la solicitud');
-      }
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/register`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            id_apoderado: id_apoderado,
+            nombre_apo: nombreApo,
+            apellido_apo: apellidoApo,
+            telefono_apo: telefonoApo,
+            correo_apo: correoApo,
+            contrasena_apo: contrasenaApo,
+            direccion_apo: direccionApo,
+            tipo_apo: tipoApo,
+          }),
+        }
+      );
 
       const result = await response.json();
-      localStorage.setItem('token', result.token);
-      console.log("user data: ", result);
 
-      // toast({
-      //   title: 'Registro exitoso!',
-      //   description: 'Te has registrado correctamente.',
-      //   status: 'success',
-      // });
+      if (!response.ok) {
+        toast.error(result?.message || "Hubo un problema al registrar.");
+        throw new Error("Error en la solicitud");
+      }
+
+      toast.success("Registro de usuario exitoso!");
+      // const result = await response.json();
+      localStorage.setItem("token", result.token);
+      console.log("user data: ", result);
 
       setTimeout(() => {
         setIsLoading(false);
-        // router.push('/blog'); // Redirige al usuario después de registrarse
+        router.push("/login"); // Redirige al usuario después de registrarse
       }, 2000);
-
     } catch (error) {
-      console.error('Error al registrarse:', error);
-      // toast({
-      //   title: 'Error al registrarse',
-      //   description: 'Inténtelo de nuevo.',
-      //   status: 'error',
-      // });
+      console.error("Error al registrarse:", error);
+      toast.error("Hubo un problema al registrar.");
       setIsLoading(false);
     }
   };
@@ -127,7 +83,9 @@ function App() {
 
       <form onSubmit={handleRegister} className="space-y-6">
         <div className="grid gap-2">
-          <Label className="mb-2 capitalize" htmlFor="rut">Rut</Label>
+          <Label className="mb-2 capitalize" htmlFor="rut">
+            Rut
+          </Label>
           <Input
             id="rut"
             className="form-input"
@@ -139,7 +97,9 @@ function App() {
           />
         </div>
         <div className="grid gap-2">
-          <Label className="mb-2 capitalize" htmlFor="nombre">Nombre</Label>
+          <Label className="mb-2 capitalize" htmlFor="nombre">
+            Nombre
+          </Label>
           <Input
             id="nombre"
             className="form-input"
@@ -151,7 +111,9 @@ function App() {
           />
         </div>
         <div className="grid gap-2">
-          <Label className="mb-2 capitalize" htmlFor="apellido">Apellido</Label>
+          <Label className="mb-2 capitalize" htmlFor="apellido">
+            Apellido
+          </Label>
           <Input
             id="apellido"
             className="form-input"
@@ -163,7 +125,9 @@ function App() {
           />
         </div>
         <div className="grid gap-2">
-          <Label className="mb-2 capitalize" htmlFor="telefono">Telefono</Label>
+          <Label className="mb-2 capitalize" htmlFor="telefono">
+            Telefono
+          </Label>
           <Input
             id="telefono"
             className="form-input"
@@ -175,7 +139,9 @@ function App() {
           />
         </div>
         <div className="grid gap-2">
-          <Label className="mb-2 capitalize" htmlFor="email">Correo</Label>
+          <Label className="mb-2 capitalize" htmlFor="email">
+            Correo
+          </Label>
           <Input
             id="email"
             className="form-input"
@@ -186,59 +152,78 @@ function App() {
           />
         </div>
         <div className="grid gap-2">
-          <Label className="mb-2 capitalize" htmlFor="password">Contraseña</Label>
-          <Input 
+          <Label className="mb-2 capitalize" htmlFor="password">
+            Contraseña
+          </Label>
+          <Input
             id="password"
-            className="form-input" 
-            type="password" 
+            className="form-input"
+            type="password"
             required
             value={contrasenaApo}
             onChange={(e) => setContrasenaApo(e.target.value)}
           />
         </div>
         <div className="grid gap-2">
-          <Label className="mb-2 capitalize" htmlFor="direccion">Direccion</Label>
-          <Input 
+          <Label className="mb-2 capitalize" htmlFor="direccion">
+            Direccion
+          </Label>
+          <Input
             id="direccion"
-            className="form-input" 
-            type="text" 
+            className="form-input"
+            type="text"
             required
             value={direccionApo}
             onChange={(e) => setDireccionApo(e.target.value)}
           />
         </div>
         <div className="grid gap-2">
-          <Label className="mb-2 capitalize" htmlFor="tipouser">Tipo de Usuario</Label>
-          <Input 
+          <Label className="mb-2 capitalize" htmlFor="tipouser">
+            Tipo de Usuario
+          </Label>
+          <Input
             id="tipouser"
-            className="form-input" 
-            type="text" 
+            className="form-input"
+            type="text"
             required
             value={tipoApo}
             onChange={(e) => setTipoApo(e.target.value)}
           />
         </div>
 
-        <Button 
-          type="submit" 
-          className="form-btn"
-          onClick={() => {
-            toast({
-              title: "Usuario Registrado exitosamente!",
-              description: "Viernes, Enero 10, 2024 at 5:57 PM",
-            })    
-          }}
-        >
-          {isLoading ? 'Cargando...' : 'Registrar'}
+        <Button type="submit" className="form-btn">
+          {isLoading ? "Cargando..." : "Registrar"}
         </Button>
 
-        <p className="text-center text-base font-medium">
-          ¿Ya tienes una cuenta? {" "}
+        <ToastContainer
+          position="top-center"
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+        />
 
-          <Link
-            href={"/login"}
-            className="font-bold text-primary"
-          >
+        <ToastContainer
+          position="top-left"
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick={false}
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="light"
+          transition={Bounce}
+        />
+
+        <p className="text-center text-base font-medium">
+          ¿Ya tienes una cuenta?{" "}
+          <Link href={"/login"} className="font-bold text-primary">
             Iniciar sesión
           </Link>
         </p>

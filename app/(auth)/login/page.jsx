@@ -1,27 +1,25 @@
 "use client";
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
-import { useRouter } from 'next/navigation';
+import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input"
-import { Label } from '@/components/ui/label';
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { Progress } from "@/components/ui/progress";
 
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer, toast, Slide } from "react-toastify";
 
 const LoginPage = () => {
   const [progress, setProgress] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
 
-  const [correoApo, setCorreoApo] = useState('');
-  const [contrasenaApo, setContrasenaApo] = useState('');
+  const [correoApo, setCorreoApo] = useState("");
+  const [contrasenaApo, setContrasenaApo] = useState("");
   const router = useRouter();
 
-  const notify = () => toast("Inicio de sesion exitoso ✅");
-
   useEffect(() => {
-    const timer = setTimeout(() => setProgress(66), 500)
-    return () => clearTimeout(timer)
+    const timer = setTimeout(() => setProgress(66), 500);
+    return () => clearTimeout(timer);
   }, []);
 
   const handleLogin = async (e) => {
@@ -31,9 +29,9 @@ const LoginPage = () => {
 
     try {
       const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/login`, {
-        method: 'POST',
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({
           correo_apo: correoApo,
@@ -43,15 +41,21 @@ const LoginPage = () => {
 
       setProgress(60);
 
+      const result = await response.json();
+
       if (!response.ok) {
-        throw new Error('Error en la solicitud');
+        toast.error(result?.message || 'Hubo un problema al iniciar sesión.');
+        // console.error(data.message);
+        throw new Error("Error en la solicitud");
       }
 
-      const result = await response.json();
-      localStorage.setItem('token', result.token);
-      localStorage.setItem('tipo_apo', result.tipo);
-      localStorage.setItem('nombre_apo', result.userValues.nombre_apo);
-      localStorage.setItem('apellido_apo', result.userValues.apellido_apo);
+      // const result = await response.json();
+      localStorage.setItem("token", result.token);
+      localStorage.setItem("tipo_apo", result.tipo);
+      localStorage.setItem("nombre_apo", result.userValues.nombre_apo);
+      localStorage.setItem("apellido_apo", result.userValues.apellido_apo);
+
+      toast.success("Inicio de sesión exitoso!");
 
       console.log("tipo usuario: ", result.tipo);
       console.log("data user: ", result.userValues.nombre_apo);
@@ -60,11 +64,10 @@ const LoginPage = () => {
       setProgress(100);
       setTimeout(() => {
         setIsLoading(false);
-        router.push('/blog'); // Redirige al usuario después de iniciar sesión
+        router.push("/blog"); // Redirige al usuario después de iniciar sesión
       }, 2000);
-
     } catch (error) {
-      console.error('Error al iniciar sesión:', error);
+      console.error("Error al iniciar sesión:", error);
       setIsLoading(false);
     }
   };
@@ -80,23 +83,28 @@ const LoginPage = () => {
 
       <form onSubmit={handleLogin} className="space-y-6">
         <div className="grid gap-2">
-          <Label className="mb-2 capitalize" htmlFor="email">Correo</Label>
+          <Label className="mb-2 capitalize" htmlFor="email">
+            Correo
+          </Label>
           <Input
             id="email"
             className="form-input"
             type="email"
             value={correoApo}
-            placeholder="m@example.com"
+            placeholder="apoderado@example.com"
             required
             onChange={(e) => setCorreoApo(e.target.value)}
           />
         </div>
         <div className="grid gap-2">
-          <Label className="mb-2 capitalize" htmlFor="password">Contraseña</Label>
-          <Input 
+          <Label className="mb-2 capitalize" htmlFor="password">
+            Contraseña
+          </Label>
+          <Input
             id="password"
-            className="form-input" 
-            type="password" 
+            className="form-input"
+            type="password"
+            placeholder="********"
             required
             value={contrasenaApo}
             onChange={(e) => setContrasenaApo(e.target.value)}
@@ -105,13 +113,18 @@ const LoginPage = () => {
 
         {isLoading && <Progress value={progress} className="w-full" />}
 
-        <Button onClick={notify} type="submit" className="form-btn" disabled={isLoading}>
-          {isLoading ? 'Cargando...' : 'Login'}
+        <Button
+          // onClick={notify}
+          type="submit"
+          className="form-btn"
+          disabled={isLoading}
+        >
+          {isLoading ? "Cargando..." : "Login"}
         </Button>
 
         <ToastContainer
-          position="top-left"
-          autoClose={5000}
+          position="top-center"
+          autoClose={2000}
           hideProgressBar={false}
           newestOnTop={false}
           closeOnClick={false}
@@ -120,21 +133,18 @@ const LoginPage = () => {
           draggable
           pauseOnHover
           theme="light"
-          // transition={Bounce}
+          transition={Slide}
         />
 
         <p className="text-center text-base font-medium">
-          Nuevo en Colegio Alicante? {" "}
-          <Link
-            href={"/register"}
-            className="font-bold text-primary"
-          >
+          Nuevo en Colegio Alicante?{" "}
+          <Link href={"/register"} className="font-bold text-primary">
             Crear una cuenta
           </Link>
         </p>
       </form>
     </div>
   );
-}
+};
 
 export default LoginPage;
