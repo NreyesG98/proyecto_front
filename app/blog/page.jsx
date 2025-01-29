@@ -68,112 +68,174 @@ const Dashboard = () => {
 
 
     return (
-        <main className="flex min-h-screen w-full flex-row">
+      <main className="flex min-h-screen w-full flex-row">
         {/* // <div className={styles.dashboard}> */}
-            <div className="admin-sidebar">
-                {/* <div className={styles.sidebar}> */}
-                <div>
-                    <div className="logo">
-                        <Image
-                            src="/icons/admin/logo.svg"
-                            alt="Logo"
-                            width={33}
-                            height={33}
-                        />
-                        <h1>Colegio Alicante</h1>
-                    </div>
-                    
+        <div className="admin-sidebar">
+          {/* <div className={styles.sidebar}> */}
+          <div>
+            <div className="logo">
+              <Image
+                src="/icons/admin/logo.svg"
+                alt="Logo"
+                width={33}
+                height={33}
+              />
+              <h1>Colegio Alicante</h1>
+            </div>
 
-                    {/* User Menu */}
-                    <div className="user">
-                        <Avatar className="h-8 w-8 rounded-lg">
-                            <AvatarImage src={avatarIcon} alt="User Avatar" />
-                            <AvatarFallback className="bg-amber-100">
-                                {/* {getInitials(session?.user?.name || "IN")} */}
-                                {getInitials(userName, userLastName) || "IN"}
-                            </AvatarFallback>
-                        </Avatar>
+            {/* User Menu */}
+            <div className="user">
+              <Avatar className="h-8 w-8 rounded-lg">
+                <AvatarImage src={avatarIcon} alt="User Avatar" />
+                <AvatarFallback className="bg-amber-100">
+                  {/* {getInitials(session?.user?.name || "IN")} */}
+                  {getInitials(userName, userLastName) || "IN"}
+                </AvatarFallback>
+              </Avatar>
 
-                        <div className="flex flex-col max-md:hidden">
-                            <p className="font-semibold text-dark-200">
-                                {capitalizeFirstLetter(userName)} {capitalizeFirstLetter(userLastName)}
-                            </p>
-                            <p className="text-xs text-light-500">
-                                {/* {session?.user?.email} */}
-                                {userType === 'admin' ? 'Administrador' : 'Apoderado'}
-                            </p>
-                        </div>
-                    </div> 
+              <div className="flex flex-col max-md:hidden">
+                <p className="font-semibold text-dark-200">
+                  {capitalizeFirstLetter(userName)}{" "}
+                  {capitalizeFirstLetter(userLastName)}
+                </p>
+                <p className="text-xs text-light-500">
+                  {/* {session?.user?.email} */}
+                  {userType === "admin" ? "Administrador" : "Apoderado"}
+                </p>
+              </div>
+            </div>
 
-                    <div className="mt-10 flex flex-col gap-5">
-                        {userType === 'admin' && (
-                            <>
-                                <div className={styles.menuItem} onClick={handleApoderadosSubMenuClick}>Apoderados</div>
-                                {showApoderadosSubMenu && (
-                                    <div className={styles.subMenu}>
-                                        <div className={styles.subMenuItem} onClick={() => handleMenuItemClick('verApoderados')}>Ver Apoderados</div>
-                                        <div className={styles.subMenuItem} onClick={() => handleMenuItemClick('agregarApoderado')}>Agregar Apoderado</div>
-                                        <div className={styles.subMenuItem} onClick={() => handleMenuItemClick('editarApoderado')}>Actualizar Apoderado</div>
-                                        <div className={styles.subMenuItem} onClick={() => handleMenuItemClick('eliminarApoderado')}>Eliminar Apoderado</div>
-
-                                    </div>
-                                )}
-                            </>
-                        )}
-                        <div className={styles.menuItem} onClick={() => handleMenuItemClick('asistencia')}>Reuniones</div>
-                        <div className={styles.menuItem} onClick={handleSubMenuClick}>Pagos</div>
-                        {showSubMenu && (
-                            <div className={styles.subMenu}>
-                                <div className={styles.subMenuItem} onClick={() => handleMenuItemClick('verPagos')}>Ver Pagos</div>
-                                {userType === 'admin' && (
-                                    <>
-                                        <div className={styles.subMenuItem} onClick={() => handleMenuItemClick('agregarPago')}>Agregar Pago</div>
-                                        <div className={styles.subMenuItem} onClick={() => handleMenuItemClick('editarPago')}>Actualizar Pago</div>
-                                        <div className={styles.subMenuItem} onClick={() => handleMenuItemClick('eliminarPago')}>Eliminar Pago</div>
-                                    </>
-                                )}
-                            </div>
-                        )}
-                        <div className={styles.menuItem} onClick={() => handleMenuItemClick('comunicaciones')}>Mis Comunicaciones</div>
-                        {/* <div className={styles.menuItem} onClick={() => handleMenuItemClick('encuestas')}>Mis encuestas</div> */}
-                        <div className={styles.menuItem} onClick={() => handleMenuItemClick('galerias')}>Galerías</div>
-
-                    </div>
+            <div className="mt-10 flex flex-col gap-5">
+              <div
+                className={styles.menuItem}
+                onClick={handleApoderadosSubMenuClick}
+              >
+                Apoderados
+              </div>
+              {showApoderadosSubMenu && (
+                <div className={styles.subMenu}>
+                  <div
+                    className={styles.subMenuItem}
+                    onClick={() => handleMenuItemClick("verApoderados")}
+                  >
+                    Ver Apoderados
+                  </div>
+                  {userType === "admin" && (
+                    <>
+                      <div
+                        className={styles.subMenuItem}
+                        onClick={() => handleMenuItemClick("agregarApoderado")}
+                      >
+                        Agregar Apoderado
+                      </div>
+                      <div
+                        className={styles.subMenuItem}
+                        onClick={() => handleMenuItemClick("editarApoderado")}
+                      >
+                        Actualizar Apoderado
+                      </div>
+                      <div
+                        className={styles.subMenuItem}
+                        onClick={() => handleMenuItemClick("eliminarApoderado")}
+                      >
+                        Eliminar Apoderado
+                      </div>
+                    </>
+                  )}
                 </div>
-
+              )}
+              <div
+                className={styles.menuItem}
+                onClick={() => handleMenuItemClick("asistencia")}
+              >
+                Reuniones
+              </div>
+              <div className={styles.menuItem} onClick={handleSubMenuClick}>
+                Pagos
+              </div>
+              {showSubMenu && (
+                <div className={styles.subMenu}>
+                  <div
+                    className={styles.subMenuItem}
+                    onClick={() => handleMenuItemClick("verPagos")}
+                  >
+                    Ver Pagos
+                  </div>
+                  {userType === "admin" && (
+                    <>
+                      <div
+                        className={styles.subMenuItem}
+                        onClick={() => handleMenuItemClick("agregarPago")}
+                      >
+                        Agregar Pago
+                      </div>
+                      <div
+                        className={styles.subMenuItem}
+                        onClick={() => handleMenuItemClick("editarPago")}
+                      >
+                        Actualizar Pago
+                      </div>
+                      <div
+                        className={styles.subMenuItem}
+                        onClick={() => handleMenuItemClick("eliminarPago")}
+                      >
+                        Eliminar Pago
+                      </div>
+                    </>
+                  )}
+                </div>
+              )}
+              <div
+                className={styles.menuItem}
+                onClick={() => handleMenuItemClick("comunicaciones")}
+              >
+                Mis Comunicaciones
+              </div>
+              {/* <div className={styles.menuItem} onClick={() => handleMenuItemClick('encuestas')}>Mis encuestas</div> */}
+              <div
+                className={styles.menuItem}
+                onClick={() => handleMenuItemClick("galerias")}
+              >
+                Galerías
+              </div>
             </div>
+          </div>
+        </div>
 
-
-            <div className='admin-container'>
-            {/* <div className={styles.mainContent}> */}
-                <header className="admin-header">
-                    <div>
-                        <h2 className="text-2xl font-semibold text-dark-400">
-                        {/* {session?.user?.name} */}
-                        </h2>
-                        <p className="text-base text-slate-500">
-                        Administra todos tus usuarios, reuniones y pagos aquí
-                        </p>
-                    </div>
-                </header>
-
-
-                {/* <h2>Contenido Principal</h2> */}
-                {activeCrud === 'verApoderados' && <CrudApoderados action="ver" />}
-                {activeCrud === 'agregarApoderado' && <CrudApoderados action="agregar" />}
-                {activeCrud === 'editarApoderado' && <CrudApoderados action="editar" />}
-                {activeCrud === 'eliminarApoderado' && <CrudApoderados action="eliminar" />}
-                {activeCrud === 'asistencia' && <CrudAsistencia />}
-                {activeCrud === 'verPagos' && <CrudPagos action="ver" />}
-                {activeCrud === 'agregarPago' && <CrudPagos action="agregar" />}
-                {activeCrud === 'editarPago' && <CrudPagos action="editar" />}
-                {activeCrud === 'eliminarPago' && <CrudPagos action="eliminar" />}
-                {activeCrud === 'comunicaciones' && <CrudComunicaciones />}
-                {/* {activeCrud === 'encuestas' && <CrudEncuestas action="ver" />} */}
-                {activeCrud === 'galerias' && <CrudGalerias />}
+        <div className="admin-container">
+          {/* <div className={styles.mainContent}> */}
+          <header className="admin-header">
+            <div>
+              <h2 className="text-2xl font-semibold text-dark-400">
+                {/* {session?.user?.name} */}
+              </h2>
+              <p className="text-base text-slate-500">
+                Administra todos tus usuarios, reuniones y pagos aquí
+              </p>
             </div>
-            
-        </main>
+          </header>
+
+          {/* <h2>Contenido Principal</h2> */}
+          {activeCrud === "verApoderados" && <CrudApoderados action="ver" />}
+          {activeCrud === "agregarApoderado" && (
+            <CrudApoderados action="agregar" />
+          )}
+          {activeCrud === "editarApoderado" && (
+            <CrudApoderados action="editar" />
+          )}
+          {activeCrud === "eliminarApoderado" && (
+            <CrudApoderados action="eliminar" />
+          )}
+          {activeCrud === "asistencia" && <CrudAsistencia />}
+          {activeCrud === "verPagos" && <CrudPagos action="ver" />}
+          {activeCrud === "agregarPago" && <CrudPagos action="agregar" />}
+          {activeCrud === "editarPago" && <CrudPagos action="editar" />}
+          {activeCrud === "eliminarPago" && <CrudPagos action="eliminar" />}
+          {activeCrud === "comunicaciones" && <CrudComunicaciones />}
+          {/* {activeCrud === 'encuestas' && <CrudEncuestas action="ver" />} */}
+          {activeCrud === "galerias" && <CrudGalerias />}
+        </div>
+      </main>
     );
 };
 
@@ -195,30 +257,44 @@ const CrudApoderados = ({ action }) => {
     
     useEffect(() => {
         const fetchData = async () => {
-            try {
-                const token = localStorage.getItem('token'); // Obtén el token de localStorage
-                const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/users`, {
-                    headers: {
-                        'Authorization': `Bearer ${token}`, // Incluye el token en los encabezados
-                        'Content-Type': 'application/json',
-                    },
-                });
-                if (!response.ok) {
-                    throw new Error('Error en la solicitud');
-                }
-                const result = await response.json();
-                if (Array.isArray(result)) {
-                    setData(result.sort((a, b) => b.id_apoderado - a.id_apoderado)); // Ordenar por id_apoderado descendente
-                } else {
-                    console.error('Error: La respuesta de la API no es un array');
-                }
-            } catch (error) {
-                console.error('Error al obtener los apoderados:', error);
+          try {
+            const token = localStorage.getItem('token'); // Obtén el token de localStorage
+            if (!token) {
+              throw new Error('Token no encontrado');
             }
+    
+            const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/users`, {
+              headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`, // Incluye el token en los encabezados
+                'Cache-Control': 'no-cache', // Agrega una cabecera no-cache para evitar la caché del navegador
+              },
+            });
+    
+            if (!response.ok) {
+              throw new Error(`Error en la solicitud: ${response.statusText}`);
+            }
+    
+            const result = await response.json();
+            if (Array.isArray(result)) {
+              setData(result.sort((a, b) => b.id_apoderado - a.id_apoderado)); // Ordenar por id_apoderado descendente
+            } else {
+              throw new Error('La respuesta de la API no es un array');
+            }
+          } catch (error) {
+            setError(error.message);
+            console.error('Error al obtener los apoderados:', error);
+          }
         };
-
+    
         fetchData();
-    }, []);
+    
+        // Cleanup function to avoid memory leaks
+        return () => {
+          setData([]);
+          setError(null);
+        };
+      }, []);
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
@@ -244,10 +320,11 @@ const CrudApoderados = ({ action }) => {
     const handleDelete = async (id) => {
         try {
             const token = localStorage.getItem('token'); // Obtén el token de localStorage
-            const response = await fetch(`http://localhost:4000/api/users/${id}`, {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/users/${id}`, {
                 method: 'DELETE',
                 headers: {
-                    'Authorization': `Bearer ${token}`, // Incluye el token en los encabezados
+                    'Authorization': `Bearer ${token}`,// Incluye el token en los encabezados
+                    'content-type': 'application/json', // Establece el tipo de contenido a JSON
                 },
             });
             if (!response.ok) {
@@ -264,7 +341,7 @@ const CrudApoderados = ({ action }) => {
         try {
             const token = localStorage.getItem('token'); // Obtén el token de localStorage
             if (editItem) {
-                const response = await fetch(`http://localhost:4000/api/users/${editItem.id_apoderado}`, {
+                const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/users/${editItem.id_apoderado}`, {
                     method: 'PUT',
                     headers: {
                         'Content-Type': 'application/json',
